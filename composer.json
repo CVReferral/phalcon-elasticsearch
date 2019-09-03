@@ -1,5 +1,5 @@
 {
-    "name": "ovr/phalcon-elasticsearch",
+    "name": "cvreferral/phalcon-elasticsearch",
     "license": "MIT",
     "authors": [
         {
@@ -11,9 +11,6 @@
             "email": "talk@dmtry.me"
         }
     ],
-    "require": {
-        "php": "~5.4"
-    },
     "autoload": {
         "psr-4": {
             "Ovr\\Phalcon\\Elastic\\": "src/"

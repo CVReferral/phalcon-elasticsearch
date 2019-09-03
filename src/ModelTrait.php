@@ -2,12 +2,14 @@
 /**
  * @author Serebro http://github.com/serebro
  * @author Patsura Dmitry http://github.com/ovr <talk@dmtry.me>
+ * @author Thanh http://github.com/byhbt
  */
 
 namespace Ovr\Phalcon\Elastic;
 
 /**
  * Class ModelTrait
+ *
  * @package Ovr\Phalcon\Elastic
  */
 trait ModelTrait
@@ -16,7 +18,7 @@ trait ModelTrait
     {
         return \Phalcon\DI::getDefault();
     }
-    
+
     /**
      * @return \Elastica\Client
      */
@@ -24,7 +26,7 @@ trait ModelTrait
     {
         return self::di()->get('elastica');
     }
-    
+
     /**
      * @return \Elastica\Type
      */
@@ -32,7 +34,7 @@ trait ModelTrait
     {
         return static::getConnection()->getIndex(static::$index)->getType(static::$type);
     }
-    
+
     /**
      * @param $id
      * @return \Elastica\Document
@@ -41,19 +43,25 @@ trait ModelTrait
     {
         return static::getStorage()->getDocument($id);
     }
-    
+
     /**
-     * @param $data
+     * @param array $data
+     * @param null $parent
      * @return \Elastica\Response
      */
-    public static function add($data)
+    public static function add($data, $parent = null)
     {
         $data['id'] = empty($data['id']) ? null : $data['id'];
         $data['synced'] = static::utcTime()->format(DATE_ISO8601);
         $doc = new \Elastica\Document($data['id'], $data);
+
+        if ($parent) {
+            $doc->setParent($parent);
+        }
+
         return static::getStorage()->addDocument($doc);
     }
-    
+
     /**
      * @param $id
      * @return \Elastica\Response
@@ -62,7 +70,7 @@ trait ModelTrait
     {
         return static::getStorage()->deleteById($id);
     }
-    
+
     /**
      * @param string $time
      * @return \DateTime
@@ -72,6 +80,7 @@ trait ModelTrait
         if (is_int($time)) {
             $time = '@' . $time;
         }
+
         return new \DateTime($time, new \DateTimeZone('UTC'));
     }
-} 
+}
