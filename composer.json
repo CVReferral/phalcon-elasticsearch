@@ -1,5 +1,7 @@
 {
     "name": "cvreferral/phalcon-elasticsearch",
+    "description": "Phalcon Model for Elastic Search.",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -15,6 +17,10 @@
             "homepage": "http://github.com/byhbt/"
         }
     ],
+    "require": {
+        "php": ">=5.5",
+        "ext-phalcon": "^3.0"
+    },
     "autoload": {
         "psr-4": {
             "Ovr\\Phalcon\\Elastic\\": "src/"
